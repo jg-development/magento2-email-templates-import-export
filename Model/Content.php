@@ -262,8 +262,9 @@ class Content implements ContentInterface
                         continue;
                     }
 
-                    if (!$this->file->mkdir(dirname($destFile), 0777) ||
-                        !$this->file->cp($sourceFile, $destFile)) {
+                    $this->file->mkdir(dirname($destFile), 0777);
+
+                    if (!$this->file->cp($sourceFile, $destFile)) {
                         throw new \Exception('Unable to save image: ' . $mediaFile);
                     }
                     $count++;
