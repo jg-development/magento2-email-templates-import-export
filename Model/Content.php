@@ -186,8 +186,9 @@ class Content implements ContentInterface
      */
     private function getMediaAttachments($content): array
     {
-        if (preg_match_all('/\{\{media.+?url\s*=\s*("|&quot;)(.+?)("|&quot;).*?\}\}/', $content, $matches)) {
-            return $matches[2];
+        if (preg_match_all('/\{\{media.+?url\s*=\s*(.+)*?\}\}/', $content, $matches)) {
+            $matches[1] = array_map(function ($item) { return trim($item, '"');}, $matches[1]);
+            return $matches[1];
         }
 
         return [];
