@@ -1,0 +1,28 @@
+{
+  "name": "template-provider/emailtemplatesimportexport",
+  "description": "EMail Templates Import Export Module For Magento-2",
+  "type": "magento2-module",
+  "authors": [
+    {
+      "email": "jan.gantzert@template-provder.com",
+      "name": "Jan Gantzert"
+    }
+  ],
+  "version": "1.0.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+    "php": "~7.4.0",
+    "magento/framework": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "TemplateProvider\\EMailTemplatesImportExport\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}
