@@ -155,7 +155,7 @@ class Content implements ContentInterface
      */
     private function eMailTemplateToArray(\Magento\Email\Model\Template $emailTemplate): array
     {
-        $media = $this->getMediaAttachments($emailTemplate->getContent());
+        $media = $this->getMediaAttachments($emailTemplate->getTemplateText());
 
         $payload = [
             'emailtemplate' => [
