@@ -2,6 +2,7 @@
 
 namespace TemplateProvider\EMailTemplatesImportExport\Model;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Store\Api\StoreRepositoryInterface;
 use Magento\Framework\Json\DecoderInterface;
 use Magento\Framework\Json\EncoderInterface;
@@ -65,7 +66,13 @@ class Content implements ContentInterface
      */
     private CollectionFactory $collectionFactory;
 
+    /**
+     * @var \Magento\Framework\ObjectManagerInterface
+     */
+    protected $objectManager;
+
     public function __construct(
+        \Magento\Framework\ObjectManagerInterface $objectManager,
         StoreRepositoryInterface $storeRepositoryInterface,
         EncoderInterface $encoderInterface,
         DecoderInterface $decoderInterface,
@@ -75,6 +82,7 @@ class Content implements ContentInterface
         DateTime $dateTime
     )
     {
+        $this->objectManager = $objectManager;
         $this->storeRepositoryInterface = $storeRepositoryInterface;
         $this->encoderInterface = $encoderInterface;
         $this->decoderInterface = $decoderInterface;
@@ -307,14 +315,16 @@ class Content implements ContentInterface
         /** @var \Magento\Email\Model\Template $eMailTemplate */
         $eMailTemplate = $this->collectionFactory->create()->getItemById($eMailTemplateSource['emailtemplate']['id']);
 
-        if ($this->mode == ContentInterface::EMAIL_TEMPLATES_MODE_SKIP) {
+        if ($eMailTemplate !== null && $this->mode == ContentInterface::EMAIL_TEMPLATES_MODE_SKIP) {
             return false;
+        }
+        if ($eMailTemplate === null) {
+            $eMailTemplate = $this->objectManager->create(\Magento\Email\Model\Template::class);
         }
 
         $eMailTemplateContent = $eMailTemplateSource['emailtemplate'];
 
         $eMailTemplate
-            ->setId($eMailTemplateContent['id'])
             ->setTemplateCode($eMailTemplateContent['template_code'])
             ->setTemplateText($eMailTemplateContent['template_text'])
             ->setTemplateStyles($eMailTemplateContent['template_styles'])
