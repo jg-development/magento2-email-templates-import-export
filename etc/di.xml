@@ -4,7 +4,7 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="SyncImport" xsi:type="object">
+                <item name="ImportEMailTemplates" xsi:type="object">
                     TemplateProvider\EMailTemplatesImportExport\Console\Command\Import
                 </item>
                 <item name="ExportEMailTemplates" xsi:type="object">
